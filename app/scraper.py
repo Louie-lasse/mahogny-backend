@@ -10,6 +10,7 @@ class Scraper():
 
     FIREFOX_BINARY = os.path.abspath("app/firefox/firefox-bin")
     GECKODRIVER_PATH = os.path.abspath("app/geckodriver")
+    home = "https://apt-www.chalmersstudentbostader.se/AptusPortal/CustomerBooking"
 
     def __init__(self) -> None:
         self._driver = self._create_selenium_driver()
@@ -27,20 +28,16 @@ class Scraper():
     
     async def login(self, user, password):
         self._driver.get("https://www.chalmersstudentbostader.se/login")
-        print("Navigated to login page")
-        # Perform login actions
+
         self._driver.find_element(By.ID, 'user_login').send_keys(user)
         self._driver.find_element(By.ID, 'user_pass').send_keys(password)
-        print("Filled in login details")
+
         self._driver.find_element(By.CSS_SELECTOR, 'button[type="submit"]').click()
 
         wait = WebDriverWait(self._driver, 10)  # Waits up to 10 seconds
         element = wait.until(EC.presence_of_element_located((By.XPATH, "//a[text()='Boka']")))
 
         self._driver.get(element.get_attribute("href"))
-        
-        print("logged in")
-        return True
     
     def __exit__(self, exc_type, exc_value, traceback):
         self._driver.quit()
