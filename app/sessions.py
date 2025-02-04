@@ -37,6 +37,11 @@ class Session_manager():
 
         self.user_sessions = self.user_sessions - old
 
+    def __exit__(self, exc_type, exc_value, traceback):
+        for (k, (s,t)) in self.user_sessions.items():
+            s.__exit__(None, None, None)
+        self.user_sessions = {}
+
     def get_session(self, session_id: str) -> Scraper|None:
         self.clear_sessions()
         if session_id in self.user_sessions:

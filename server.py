@@ -1,5 +1,6 @@
 import threading
 import time
+import atexit
 from flask import Flask, request, jsonify
 from app import Session_manager
 
@@ -22,6 +23,15 @@ async def login():
     
     return jsonify({"session_id": session_id}), 302
 
+
+def cleanup():
+    """
+    Close all sessions on exit
+    """
+    sm.__exit__(None, None, None)
+    print("Sessions cleared")
+
+atexit.register(cleanup)
 
 if __name__ == '__main__':
     app.run(debug=True)
