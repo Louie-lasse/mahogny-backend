@@ -6,6 +6,8 @@ __pycache__/
 # C extensions
 *.so
 
+firefox/
+
 # Distribution / packaging
 .Python
 build/
