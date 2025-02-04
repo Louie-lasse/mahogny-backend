@@ -9,14 +9,14 @@ app = Flask(__name__)
 sm = Session_manager()
 
 @app.route('/login', methods=['POST'])
-async def login():
+def login():
 
     user = request.json.get('user')
     password = request.json.get('password')
     if not all([user, password]):
         return jsonify({"error": "Missing user or password"}), 400
     
-    session_id = await sm.add_user_session(user, password)
+    session_id = sm.add_user_session(user, password)
 
     if not session_id:
         return jsonify({"error": "Invalid user or password"}), 401

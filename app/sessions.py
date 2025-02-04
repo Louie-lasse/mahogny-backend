@@ -10,10 +10,10 @@ class Session_manager():
     def __init__(self) -> None:
         self.user_sessions = {}
     
-    async def add_user_session(self, user: str, password: str) -> bool|str:
+    def add_user_session(self, user: str, password: str) -> bool|str:
         s = Scraper()
         try:
-            await s.login(user, password)
+            s.login(user, password)
         except Exception as e:
             print(e)
             return False

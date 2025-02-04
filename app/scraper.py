@@ -26,7 +26,7 @@ class Scraper():
         driver = webdriver.Firefox(service=service, options=options)
         return driver
     
-    async def login(self, user, password):
+    def login(self, user, password):
         self._driver.get("https://www.chalmersstudentbostader.se/login")
 
         self._driver.find_element(By.ID, 'user_login').send_keys(user)
